@@ -1,1 +1,217 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+	<title>test</title>
+
+	<script   
+		src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous">
+	</script>
+
+  <script type="text/javascript" src="js/smoothie.js"></script>
+
+	 <!-- CSS  -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+
+
+<style>
+  
+.plugbadge{
+ 
+  padding-bottom: 0px; 
+  margin-right:5px;
+  text-align:center;
+  border-radius: 2px;
+  background-color: #3498db;
+  color: #EEEEEE;
+ 
+
+}
+
+.appstate{
+
+  padding-bottom: 0px; 
+  margin-left:5px;
+   margin-right:5px;
+  text-align:center;
+  border-radius: 2px;
+  background-color: #3498db;
+  color: #EEEEEE;
+
+
+}
+
+.wattstate{
+
+  padding-bottom: 0px; 
+  margin-left:10px;
+  text-align:center;
+  border-radius: 2px;
+  background-color: #3498db;
+  color: #EEEEEE;
+
+
+}
+
+.yellowstate{
+  background-color: rgba(241, 196, 15,1.0);
+}
+
+.bluestate{
+  background-color: rgba(41, 128, 185,1.0);
+}
+
+.redstate{
+  background-color: rgba(211, 84, 0,1.0);
+}
+
+
+
+</style>
+</head>
+<body>
+
+<nav class="indigo darken-4" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">AGILAS-1</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">About</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">About</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+<div class="section">
+  <div class="container">
+	<div class="row">
+		<div class="col s12">
+
+
+    <div class="row" style="position:relative; left:12px; padding-bottom:1px; margin-bottom:1px;">
+      <div class="col s2 plugbadge yellowstate">Plug 1</div>
+      <div class="col s2 appstate yellowstate" id="id1pred">None</div>
+      <div class="col s2 wattstate yellowstate" id="id1pow">0 W</div>
+    </div>
+			 <canvas id="mycanvas" width="800" height="110" style="position:relative;"></canvas>
+        
+    <div class="row" style="position:relative; left:12px; top:10px; padding-bottom:1px; margin-bottom:1px;">
+      <div class="col s2 plugbadge">Plug 2</div>
+      <div class="col s2 appstate" id="id2pred">None</div>
+      <div class="col s2 wattstate" id="id2pow">0 W</div>
+    </div>
+
+       <canvas id="mycanvas1" width="800" height="110" style="position:relative; top:10px;"></canvas>
+       
+    <div class="row" style="position:relative; left:12px; top:20px; padding-bottom:1px; margin-bottom:1px;">
+      <div class="col s2 plugbadge redstate">Plug 3</div>
+      <div class="col s2 appstate redstate" id="id3pred">None</div>
+      <div class="col s2 wattstate redstate" id="id3pow">0 W</div>
+    </div>
+
+       <canvas id="mycanvas2" width="800" height="110" style="position:relative; top:20px;"></canvas>
+
+		</div>
+
+
+
+	</div>  	
+  </div>
+</div>
+
+<script src="/primus/primus.js"></script>
+
+<script type="text/javascript">
+
+
+//
+// inputlist is a global variable
+//
+
+var categoryMap =  {
+  "0": "OFF",
+  "1": "Light",
+  "2": "Fan",
+  "3": "Television"
+}
+
+
+//
+// Connect to the primus server
+//
+var primus = Primus.connect('http://localhost:8087');
+
+
+primus.on('prediction', function receiveData(data) {
+   
+   var processedData = JSON.parse(data)
+   console.log(categoryMap[processedData['id1']['pred'].toString()]);
+
+  
+  $('#id1pow').text(processedData['id1']['pow'] + " W");
+  $('#id2pow').text(processedData['id2']['pow'] + " W");
+  $('#id3pow').text(processedData['id3']['pow'] + " W");
+
+  $('#id1pred').text(categoryMap[processedData['id1']['pred'].toString()]);
+  $('#id2pred').text(categoryMap[processedData['id2']['pred'].toString()]);
+  $('#id3pred').text(categoryMap[processedData['id3']['pred'].toString()]);
+  
+  line1.append(new Date().getTime(), processedData['id1']['pow']);
+  line2.append(new Date().getTime(), processedData['id2']['pow']);
+  line3.append(new Date().getTime(), processedData['id3']['pow']);
+
+
+})
+
+
+
+var smoothie1 = new SmoothieChart({millisPerPixel:50,grid: { strokeStyle:'rgba(225, 225, 225,0.35)', fillStyle:'rgba(20,20,20,0.93)',
+          lineWidth: 1, millisPerLine: 500, verticalSections: 5} /*maxValue:70, minValue:0*/});
+
+var smoothie2 = new SmoothieChart({millisPerPixel:50,grid: { strokeStyle:'rgba(225, 225, 225,0.35)', fillStyle:'rgba(20,20,20,0.93)',
+          lineWidth: 1, millisPerLine: 500, verticalSections: 5}/* maxValue:70, minValue:0*/});
+
+var smoothie3 = new SmoothieChart({millisPerPixel:50,grid: { strokeStyle:'rgba(225, 225, 225,0.35)', fillStyle:'rgba(20,20,20,0.93)',
+          lineWidth: 1, millisPerLine: 500, verticalSections: 5}/* maxValue:70, minValue:0*/});
+
+
+smoothie1.streamTo(document.getElementById("mycanvas"),1000);
+smoothie2.streamTo(document.getElementById("mycanvas1"),1000);
+smoothie3.streamTo(document.getElementById("mycanvas2"),1000);
+
+
+
+// Data
+var line1 = new TimeSeries();
+var line2 = new TimeSeries();
+var line3 = new TimeSeries();
+
+
+
+// Add to SmoothieChart
+smoothie1.addTimeSeries(line1, { strokeStyle:'rgba(241, 196, 15,1.0)', fillStyle:'rgba(241, 196, 15,0.4)', lineWidth:3 });
+smoothie2.addTimeSeries(line2, { strokeStyle:'rgba(41, 128, 185,1.0)', fillStyle:'rgba(41, 128, 185,0.4)', lineWidth:3 });
+smoothie3.addTimeSeries(line3, { strokeStyle:'rgba(211, 84, 0,1.0)', fillStyle:'rgba(211, 84, 0,0.4)', lineWidth:3 });
+
+
+
+</script>
+
+
+
+<!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+</body>
+</html>
