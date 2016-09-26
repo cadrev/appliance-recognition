@@ -34,7 +34,7 @@ while 1:
 
     while(ser.inWaiting() > 0):
    	    
-   	    # Read the data sent from the smart plug to the XBEE
+        # Read the data sent from the smart plug to the XBEE
         char  = ser.read(1024)
         data  = data + char 
         
