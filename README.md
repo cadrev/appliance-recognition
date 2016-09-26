@@ -1,5 +1,5 @@
 ## Appliance Recognition
-This is a simple project to practice and demonstrate the fullstack development of a Smart Plug IoT solution capable
+This a research project to practice and demonstrate the fullstack development of a Smart Plug IoT solution capable
 of predicting an appliance in use.   
 
        Folder   |  Description 
