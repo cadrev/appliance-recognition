@@ -1,0 +1,20 @@
+{
+  "name": "apprecognition_server",
+  "version": "1.0.1",
+  "description": "A server application for displaying realtime power consumption and appliance recognition using smart-plug",
+  "main": "server.js",
+  "dependencies": {
+    "node-static": "^0.7.8",
+    "primus": "^6.0.3",
+    "primus-emitter": "^3.1.1",
+    "request": "^2.73.0",
+    "sockjs": "^0.3.17"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Felan Carlo Garcia",
+  "license": "ISC"
+}
