@@ -14,7 +14,7 @@ of predicting an appliance in use.
  
   **Web Page**
   
-   <img src="https://github.com/cadrev/appliance-recognition/blob/master/attachment/website.png" width="450" style="position:relative; left:-50px;">
+   <img src="https://github.com/cadrev/appliance-recognition/blob/master/attachment/website.png" width="600" style="position:relative; left:-50px;">
   
   
 
