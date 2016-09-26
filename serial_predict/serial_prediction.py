@@ -57,7 +57,6 @@ while 1:
         
         # convert the dictionary to a json dump
         val  = json.dumps(test)
-        print val
 
         # send the json to a NodeJS server
         s.send(val)
