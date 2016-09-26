@@ -12,3 +12,9 @@ Run the application using:
 ```javascript
 node server.js
 ```
+
+Open your browser to:
+
+```javascript
+localhost:8087
+```
