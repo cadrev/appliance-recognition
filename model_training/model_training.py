@@ -28,6 +28,6 @@ neigh.fit(train, label)
 
 # Dumping a KNN model into a pickle file
 from sklearn.externals import joblib
-filename = 'simulator.pkl'
+filename = 'neigh.pkl'
 joblib.dump(neigh, filename) 
 
