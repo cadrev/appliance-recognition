@@ -6,7 +6,7 @@ import numpy  as np
 import pandas as pd
 from  sklearn.neighbors import KNeighborsClassifier
 
-path  = 'appdata.csv'
+path  = 'data/appdata.csv'
 train = pd.read_csv(path, sep=',')
 
 # remove the time and category
